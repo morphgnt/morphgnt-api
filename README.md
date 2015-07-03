@@ -10,11 +10,12 @@ this API. It is subject to rapid change at the moment.
 The URI patterns are:
 
 ```
-/v0/word/{word_id}.json
+/v0/root.json
+/v0/book/{osis_id}.json
 /v0/paragraph/{paragraph_id}.json
 /v0/sentence/{sentence_id}.json
 /v0/verse/{verse_id}.json
-/v0/book/{osis_id}.json
+/v0/word/{word_id}.json
 ```
 
 A word (currently) looks something like this:

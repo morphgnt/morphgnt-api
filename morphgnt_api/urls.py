@@ -9,5 +9,5 @@ urlpatterns = [
 
     url(r"^v0/book/(?P<book_osis_id>\w+).json$", "morphgnt_api.views.book", name="book"),
 
-    url(r"^v0/root.js$", "morphgnt_api.views.root", name="root"),
+    url(r"^v0/root.json$", "morphgnt_api.views.root", name="root"),
 ]
