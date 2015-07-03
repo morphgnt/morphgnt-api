@@ -61,5 +61,4 @@ Things that still need to be done include:
 * root resource
 * book and possibly chapter resources
 * prev/next navigation between paragraphs, sentences and verses
-* expansion of `pos`, `parse` and `dep_type` values
 * investigation of vocabulary re-use
