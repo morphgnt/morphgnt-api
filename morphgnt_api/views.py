@@ -31,4 +31,4 @@ def root(request):
 
 
 def home(request):
-    return HttpResponse("see <a href='{link}'>{link}</a>.".format(link=reverse("root")), content_type="text/html")
+    return HttpResponse("Go to <a href='{link}'>{link}</a> for API. See <a href='https://github.com/morphgnt/morphgnt-api'>https://github.com/morphgnt/morphgnt-api</a> for documentation.".format(link=reverse("root")), content_type="text/html")
