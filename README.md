@@ -29,12 +29,15 @@ A word (currently) looks something like this:
     word: "λόγος",
     norm: "λόγος",
     lemma: "λόγος",
-    pos: "N-",
-    parse: "----NSM-",
+    pos: "N",
+    case: "N",
+    number: "S",
+    gender: "M",
     dep_type: "S",
     head: "/v0/word/64001001002.json"
 }
 ```
+
 
 A verse (currently) looks something like this:
 
