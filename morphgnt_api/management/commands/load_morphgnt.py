@@ -36,7 +36,7 @@ class Command(BaseCommand):
                     norm=u(norm),
                     lemma=u(lemma),
                     dep_type=dep_type,
-                    head=head
+                    head=head if head != "None" else None,
                 ).save()
 
                 if verse_id[:2] != last_book:
