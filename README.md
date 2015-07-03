@@ -20,18 +20,18 @@ A word (currently) looks something like this:
 
 ```
 {
-    @id: "/v0/word/64001001005.json"
-    verse_id: "/v0/verse/640101.json"
-    sentence_id: "/v0/sentence/640001.json"
-    paragraph_id: "/v0/paragraph/64001.json"
-    crit_text: "λόγος,"
-    text: "λόγος,"
-    word: "λόγος"
-    norm: "λόγος"
-    lemma: "λόγος"
-    pos: "N-"
-    parse: "----NSM-"
-    dep_type: "S"
+    @id: "/v0/word/64001001005.json",
+    verse_id: "/v0/verse/640101.json",
+    sentence_id: "/v0/sentence/640001.json",
+    paragraph_id: "/v0/paragraph/64001.json",
+    crit_text: "λόγος,",
+    text: "λόγος,",
+    word: "λόγος",
+    norm: "λόγος",
+    lemma: "λόγος",
+    pos: "N-",
+    parse: "----NSM-",
+    dep_type: "S",
     head: "/v0/word/64001001002.json"
 }
 ```
@@ -40,8 +40,8 @@ A verse (currently) looks something like this:
 
 ```
 {
-    @id: "/v0/verse/640101.json"
-    @type: "verse"
+    @id: "/v0/verse/640101.json",
+    @type: "verse",
     words: [...]
 }
 ```
@@ -58,5 +58,5 @@ Things that still need to be done include:
 * root resource
 * book and possibly chapter resources
 * prev/next navigation between paragraphs, sentences and verses
-* expansion of pos, parse and dep_type values
+* expansion of `pos`, `parse` and `dep_type` values
 * investigation of vocabulary re-use
