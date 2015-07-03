@@ -14,6 +14,7 @@ The URI patterns are:
 /v0/paragraph/{paragraph_id}.json
 /v0/sentence/{sentence_id}.json
 /v0/verse/{verse_id}.json
+/v0/book/{osis_id}.json
 ```
 
 A word (currently) looks something like this:
@@ -45,6 +46,7 @@ A verse (currently) looks something like this:
 {
     @id: "/v0/verse/640101.json",
     @type: "verse",
+    book: "/v0/book/John.json",
     words: [...]
 }
 ```
@@ -54,11 +56,23 @@ where `words` is a list of objects like the word above.
 A paragraph and sentence are very similar to a verse (with an `@id`, `@type`
 and `words` list).
 
+A book (currently) looks something like this:
+
+```
+{
+    "@id": "/v0/book/1Cor.json",
+    "@type": "book",
+    "name": "1 Corinthians",
+    "first_paragraph": "/v0/paragraph/67001.json",
+    "first_verse": "/v0/verse/670101.json",
+    "first_sentence": "/v0/sentence/670001.json"
+}
+```
+
 Feedback is greatly appreciated to make this more useful.
 
 Things that still need to be done include:
 
 * root resource
-* book and possibly chapter resources
 * prev/next navigation between paragraphs, sentences and verses
 * investigation of vocabulary re-use
