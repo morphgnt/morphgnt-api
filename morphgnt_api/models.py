@@ -30,13 +30,20 @@ class Word(models.Model):
     dep_type = models.CharField(max_length=4)
     head = models.CharField(max_length=11, null=True)
 
+    class Meta:
+        ordering = ["word_id"]
+
+    @staticmethod
+    def get_full_id(word_id):
+        return reverse("word", args=[word_id]) if word_id else None
+
     def to_dict(self):
         d = {
-            "@id": reverse("word", args=[self.word_id]),
+            "@id": Word.get_full_id(self.word_id),
             "@type": "word",
-            "verse_id": reverse("verse", args=[self.verse_id]),
-            "paragraph_id": reverse("paragraph", args=[self.paragraph_id]),
-            "sentence_id": reverse("sentence", args=[self.sentence_id]),
+            "verse_id": Verse.get_full_id(self.verse_id),
+            "paragraph_id": Paragraph.get_full_id(self.paragraph_id),
+            "sentence_id": Sentence.get_full_id(self.sentence_id),
             "pos": self.pos.strip("-"),
             "crit_text": self.crit_text,
             "text": self.text,
@@ -44,7 +51,7 @@ class Word(models.Model):
             "norm": self.norm,
             "lemma": self.lemma,
             "dep_type": self.dep_type,
-            "head": reverse("word", args=[self.head]) if self.head else None,
+            "head": Word.get_full_id(self.head),
         }
         d.update(parse_as_dict(self.parse))
         return d
@@ -57,16 +64,23 @@ class Paragraph(models.Model):
     prev_paragraph = models.CharField(max_length=5, null=True)
     next_paragraph = models.CharField(max_length=5, null=True)
 
+    class Meta:
+        ordering = ["paragraph_id"]
+
+    @staticmethod
+    def get_full_id(paragraph_id):
+        return reverse("paragraph", args=[paragraph_id]) if paragraph_id else None
+
     def words(self):
-        return Word.objects.filter(paragraph_id=self.paragraph_id).order_by("word_id")
+        return Word.objects.filter(paragraph_id=self.paragraph_id)
 
     def to_dict(self):
         return {
-            "@id": reverse("paragraph", args=[self.paragraph_id]),
+            "@id": Paragraph.get_full_id(self.paragraph_id),
             "@type": "paragraph",
-            "prev": reverse("paragraph", args=[self.prev_paragraph]) if self.prev_paragraph else None,
-            "next": reverse("paragraph", args=[self.next_paragraph]) if self.next_paragraph else None,
-            "book": reverse("book", args=[self.book_osis_id]),
+            "prev": Paragraph.get_full_id(self.prev_paragraph),
+            "next": Paragraph.get_full_id(self.next_paragraph),
+            "book": Book.get_full_id(self.book_osis_id),
             "words": [w.to_dict() for w in self.words()],
         }
 
@@ -78,16 +92,23 @@ class Sentence(models.Model):
     prev_sentence = models.CharField(max_length=6, null=True)
     next_sentence = models.CharField(max_length=6, null=True)
 
+    class Meta:
+        ordering = ["sentence_id"]
+
+    @staticmethod
+    def get_full_id(sentence_id):
+        return reverse("sentence", args=[sentence_id]) if sentence_id else None
+
     def words(self):
-        return Word.objects.filter(sentence_id=self.sentence_id).order_by("word_id")
+        return Word.objects.filter(sentence_id=self.sentence_id)
 
     def to_dict(self):
         return {
-            "@id": reverse("sentence", args=[self.sentence_id]),
+            "@id": Sentence.get_full_id(self.sentence_id),
             "@type": "sentence",
-            "prev": reverse("sentence", args=[self.prev_sentence]) if self.prev_sentence else None,
-            "next": reverse("sentence", args=[self.next_sentence]) if self.next_sentence else None,
-            "book": reverse("book", args=[self.book_osis_id]),
+            "prev": Sentence.get_full_id(self.prev_sentence),
+            "next": Sentence.get_full_id(self.next_sentence),
+            "book": Book.get_full_id(self.book_osis_id),
             "words": [w.to_dict() for w in self.words()],
         }
 
@@ -99,16 +120,23 @@ class Verse(models.Model):
     prev_verse = models.CharField(max_length=6, null=True)
     next_verse = models.CharField(max_length=6, null=True)
 
+    class Meta:
+        ordering = ["verse_id"]
+
+    @staticmethod
+    def get_full_id(verse_id):
+        return reverse("verse", args=[verse_id]) if verse_id else None
+
     def words(self):
-        return Word.objects.filter(verse_id=self.verse_id).order_by("word_id")
+        return Word.objects.filter(verse_id=self.verse_id)
 
     def to_dict(self):
         return {
             "@id": reverse("verse", args=[self.verse_id]),
             "@type": "verse",
             "book": reverse("book", args=[self.book_osis_id]),
-            "prev": reverse("verse", args=[self.prev_verse]) if self.prev_verse else None,
-            "next": reverse("verse", args=[self.next_verse]) if self.next_verse else None,
+            "prev": Verse.get_full_id(self.prev_verse),
+            "next": Verse.get_full_id(self.next_verse),
             "words": [w.to_dict() for w in self.words()],
         }
 
@@ -119,22 +147,29 @@ class Book(models.Model):
     name = models.CharField(max_length=20)
     sblgnt_id = models.CharField(max_length=2)
 
+    class Meta:
+        ordering = ["sblgnt_id"]
+
+    @staticmethod
+    def get_full_id(book_osis_id):
+        return reverse("book", args=[book_osis_id]) if book_osis_id else None
+
     def first_verse(self):
-        return Verse.objects.filter(book_osis_id=self.book_osis_id).order_by("verse_id")[0]
+        return Verse.objects.filter(book_osis_id=self.book_osis_id)[0]
 
     def first_sentence(self):
-        return Sentence.objects.filter(book_osis_id=self.book_osis_id).order_by("sentence_id")[0]
+        return Sentence.objects.filter(book_osis_id=self.book_osis_id)[0]
 
     def first_paragraph(self):
-        return Paragraph.objects.filter(book_osis_id=self.book_osis_id).order_by("paragraph_id")[0]
+        return Paragraph.objects.filter(book_osis_id=self.book_osis_id)[0]
 
     def to_dict(self):
         return {
-            "@id": reverse("book", args=[self.book_osis_id]),
+            "@id": Book.get_full_id(self.book_osis_id),
             "@type": "book",
             "name": self.name,
             "root": reverse("root"),
-            "first_verse": reverse("verse", args=[self.first_verse().verse_id]),
-            "first_sentence": reverse("sentence", args=[self.first_sentence().sentence_id]),
-            "first_paragraph": reverse("paragraph", args=[self.first_paragraph().paragraph_id]),
+            "first_verse": Verse.get_full_id(self.first_verse().verse_id),
+            "first_sentence": Sentence.get_full_id(self.first_sentence().sentence_id),
+            "first_paragraph": Paragraph.get_full_id(self.first_paragraph().paragraph_id),
         }
