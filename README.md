@@ -46,6 +46,8 @@ A verse (currently) looks something like this:
 {
     @id: "/v0/verse/640101.json",
     @type: "verse",
+    prev: null,,
+    next: "/v0/verse/640102.json",
     book: "/v0/book/John.json",
     words: [...]
 }
@@ -53,8 +55,8 @@ A verse (currently) looks something like this:
 
 where `words` is a list of objects like the word above.
 
-A paragraph and sentence are very similar to a verse (with an `@id`, `@type`
-and `words` list).
+A paragraph and sentence are very similar to a verse (with an `@id`, `@type`,
+`prev`, `next`, `book` and `words` list).
 
 A book (currently) looks something like this:
 
