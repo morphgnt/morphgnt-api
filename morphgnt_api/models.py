@@ -14,10 +14,11 @@ def parse_as_dict(parse):
 
 class Word(models.Model):
 
-    word_id = models.CharField(max_length=11)
-    verse_id = models.CharField(max_length=6)
-    paragraph_id = models.CharField(max_length=5)
-    sentence_id = models.CharField(max_length=6)
+    word_id = models.CharField(max_length=11, db_index=True)
+    verse_id = models.CharField(max_length=6, db_index=True)
+    paragraph_id = models.CharField(max_length=5, db_index=True)
+    sentence_id = models.CharField(max_length=6, db_index=True)
+
     pos = models.CharField(max_length=2)
     parse = models.CharField(max_length=8)
 
@@ -59,8 +60,9 @@ class Word(models.Model):
 
 class Paragraph(models.Model):
 
-    paragraph_id = models.CharField(max_length=5)
-    book_osis_id = models.CharField(max_length=6)
+    paragraph_id = models.CharField(max_length=5, db_index=True)
+    book_osis_id = models.CharField(max_length=6, db_index=True)
+
     prev_paragraph = models.CharField(max_length=5, null=True)
     next_paragraph = models.CharField(max_length=5, null=True)
 
@@ -87,8 +89,9 @@ class Paragraph(models.Model):
 
 class Sentence(models.Model):
 
-    sentence_id = models.CharField(max_length=6)
-    book_osis_id = models.CharField(max_length=6)
+    sentence_id = models.CharField(max_length=6, db_index=True)
+    book_osis_id = models.CharField(max_length=6, db_index=True)
+
     prev_sentence = models.CharField(max_length=6, null=True)
     next_sentence = models.CharField(max_length=6, null=True)
 
@@ -115,8 +118,9 @@ class Sentence(models.Model):
 
 class Verse(models.Model):
 
-    verse_id = models.CharField(max_length=6)
-    book_osis_id = models.CharField(max_length=6)
+    verse_id = models.CharField(max_length=6, db_index=True)
+    book_osis_id = models.CharField(max_length=6, db_index=True)
+
     prev_verse = models.CharField(max_length=6, null=True)
     next_verse = models.CharField(max_length=6, null=True)
 
@@ -143,7 +147,8 @@ class Verse(models.Model):
 
 class Book(models.Model):
 
-    book_osis_id = models.CharField(max_length=6)
+    book_osis_id = models.CharField(max_length=6, db_index=True)
+
     name = models.CharField(max_length=20)
     sblgnt_id = models.CharField(max_length=2)
 
