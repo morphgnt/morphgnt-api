@@ -65,6 +65,7 @@ A book (currently) looks something like this:
     "@id": "/v0/book/1Cor.json",
     "@type": "book",
     "name": "1 Corinthians",
+    root: "/v0/root.js",
     "first_paragraph": "/v0/paragraph/67001.json",
     "first_verse": "/v0/verse/670101.json",
     "first_sentence": "/v0/sentence/670001.json"

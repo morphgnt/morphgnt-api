@@ -132,6 +132,7 @@ class Book(models.Model):
             "@id": reverse("book", args=[self.book_osis_id]),
             "@type": "book",
             "name": self.name,
+            "root": reverse("root"),
             "first_verse": reverse("verse", args=[self.first_verse().verse_id]),
             "first_sentence": reverse("sentence", args=[self.first_sentence().sentence_id]),
             "first_paragraph": reverse("paragraph", args=[self.first_paragraph().paragraph_id]),
