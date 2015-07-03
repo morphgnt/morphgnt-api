@@ -47,3 +47,77 @@ class Word(models.Model):
         }
         d.update(parse_as_dict(self.parse))
         return d
+
+
+class Paragraph(models.Model):
+
+    paragraph_id = models.CharField(max_length=5)
+    book_osis_id = models.CharField(max_length=6)
+    prev_paragraph = models.CharField(max_length=5, null=True)
+    next_paragraph = models.CharField(max_length=5, null=True)
+
+    def to_dict(self):
+        return {
+            "@id": reverse("paragraph", args=[self.paragraph_id]),
+            "@type": "paragraph",
+            "book": reverse("book", args=[self.book_osis_id]),
+            "words": [w.to_dict() for w in Word.objects.filter(paragraph_id=self.paragraph_id).order_by("word_id")],
+        }
+
+
+class Sentence(models.Model):
+
+    sentence_id = models.CharField(max_length=6)
+    book_osis_id = models.CharField(max_length=6)
+    prev_sentence = models.CharField(max_length=6, null=True)
+    next_sentence = models.CharField(max_length=6, null=True)
+
+    def to_dict(self):
+        return {
+            "@id": reverse("sentence", args=[self.sentence_id]),
+            "@type": "sentence",
+            "book": reverse("book", args=[self.book_osis_id]),
+            "words": [w.to_dict() for w in Word.objects.filter(sentence_id=self.sentence_id).order_by("word_id")],
+        }
+
+
+class Verse(models.Model):
+
+    verse_id = models.CharField(max_length=6)
+    book_osis_id = models.CharField(max_length=6)
+    prev_verse = models.CharField(max_length=6, null=True)
+    next_verse = models.CharField(max_length=6, null=True)
+
+    def to_dict(self):
+        return {
+            "@id": reverse("verse", args=[self.verse_id]),
+            "@type": "verse",
+            "book": reverse("book", args=[self.book_osis_id]),
+            "words": [w.to_dict() for w in Word.objects.filter(verse_id=self.verse_id).order_by("word_id")],
+        }
+
+
+class Book(models.Model):
+
+    book_osis_id = models.CharField(max_length=6)
+    name = models.CharField(max_length=20)
+    sblgnt_id = models.CharField(max_length=2)
+
+    def first_verse(self):
+        return Verse.objects.filter(book_osis_id=self.book_osis_id).order_by("verse_id")[0]
+
+    def first_sentence(self):
+        return Sentence.objects.filter(book_osis_id=self.book_osis_id).order_by("sentence_id")[0]
+
+    def first_paragraph(self):
+        return Paragraph.objects.filter(book_osis_id=self.book_osis_id).order_by("paragraph_id")[0]
+
+    def to_dict(self):
+        return {
+            "@id": reverse("book", args=[self.book_osis_id]),
+            "@type": "book",
+            "name": self.name,
+            "first_verse": reverse("verse", args=[self.first_verse().verse_id]),
+            "first_sentence": reverse("sentence", args=[self.first_sentence().sentence_id]),
+            "first_paragraph": reverse("paragraph", args=[self.first_paragraph().paragraph_id]),
+        }

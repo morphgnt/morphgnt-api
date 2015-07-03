@@ -7,7 +7,7 @@ urlpatterns = [
     url(r"^v0/sentence/(?P<sentence_id>\d{6}).json$", "morphgnt_api.views.sentence", name="sentence"),
     url(r"^v0/verse/(?P<verse_id>\d{6}).json$", "morphgnt_api.views.verse", name="verse"),
 
-    url(r"^v0/book/(?P<osis_id>\w+).json$", "morphgnt_api.views.book", name="book"),
+    url(r"^v0/book/(?P<book_osis_id>\w+).json$", "morphgnt_api.views.book", name="book"),
 
     url(r"^v0/root.js$", "morphgnt_api.views.root", name="root"),
 ]
