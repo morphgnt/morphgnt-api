@@ -33,6 +33,7 @@ class Word(models.Model):
     def to_dict(self):
         d = {
             "@id": reverse("word", args=[self.word_id]),
+            "@type": "word",
             "verse_id": reverse("verse", args=[self.verse_id]),
             "paragraph_id": reverse("paragraph", args=[self.paragraph_id]),
             "sentence_id": reverse("sentence", args=[self.sentence_id]),

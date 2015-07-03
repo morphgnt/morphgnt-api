@@ -22,6 +22,7 @@ A word (currently) looks something like this:
 ```
 {
     @id: "/v0/word/64001001005.json",
+    @type: "word",
     verse_id: "/v0/verse/640101.json",
     sentence_id: "/v0/sentence/640001.json",
     paragraph_id: "/v0/paragraph/64001.json",
