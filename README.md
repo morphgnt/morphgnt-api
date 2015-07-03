@@ -2,7 +2,7 @@
 
 an experimental REST API for MorphGNT
 
-This will go up on `api.morphgnt.org` shortly.
+This is available on <api.morphgnt.org>.
 
 Note that the `/v0/` prefix is used because there is no commitment to keep
 this API. It is subject to rapid change at the moment.
