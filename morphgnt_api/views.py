@@ -86,3 +86,15 @@ def book(request, osis_id):
         "first_sentence": reverse("sentence", args=["{}0001".format(books_by_osis_id[osis_id][1])]),
         "first_paragraph": reverse("paragraph", args=["{}001".format(books_by_osis_id[osis_id][1])]),
     })
+
+
+def root(request):
+    return JsonResponse({
+        "books": [
+            {
+                "@id": reverse("book", args=[k]),
+                "name": v[0],
+            }
+            for k, v in sorted(books_by_osis_id.items(), key=lambda (k, v): v[1])
+        ]
+    })
