@@ -70,8 +70,3 @@ A book (currently) looks something like this:
 ```
 
 Feedback is greatly appreciated to make this more useful.
-
-Things that still need to be done include:
-
-* prev/next navigation between paragraphs, sentences and verses
-* investigation of vocabulary re-use

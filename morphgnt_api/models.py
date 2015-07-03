@@ -56,12 +56,17 @@ class Paragraph(models.Model):
     prev_paragraph = models.CharField(max_length=5, null=True)
     next_paragraph = models.CharField(max_length=5, null=True)
 
+    def words(self):
+        return Word.objects.filter(paragraph_id=self.paragraph_id).order_by("word_id")
+
     def to_dict(self):
         return {
             "@id": reverse("paragraph", args=[self.paragraph_id]),
             "@type": "paragraph",
+            "prev": reverse("paragraph", args=[self.prev_paragraph]) if self.prev_paragraph else None,
+            "next": reverse("paragraph", args=[self.next_paragraph]) if self.next_paragraph else None,
             "book": reverse("book", args=[self.book_osis_id]),
-            "words": [w.to_dict() for w in Word.objects.filter(paragraph_id=self.paragraph_id).order_by("word_id")],
+            "words": [w.to_dict() for w in self.words()],
         }
 
 
@@ -72,12 +77,17 @@ class Sentence(models.Model):
     prev_sentence = models.CharField(max_length=6, null=True)
     next_sentence = models.CharField(max_length=6, null=True)
 
+    def words(self):
+        return Word.objects.filter(sentence_id=self.sentence_id).order_by("word_id")
+
     def to_dict(self):
         return {
             "@id": reverse("sentence", args=[self.sentence_id]),
             "@type": "sentence",
+            "prev": reverse("sentence", args=[self.prev_sentence]) if self.prev_sentence else None,
+            "next": reverse("sentence", args=[self.next_sentence]) if self.next_sentence else None,
             "book": reverse("book", args=[self.book_osis_id]),
-            "words": [w.to_dict() for w in Word.objects.filter(sentence_id=self.sentence_id).order_by("word_id")],
+            "words": [w.to_dict() for w in self.words()],
         }
 
 
@@ -88,12 +98,17 @@ class Verse(models.Model):
     prev_verse = models.CharField(max_length=6, null=True)
     next_verse = models.CharField(max_length=6, null=True)
 
+    def words(self):
+        return Word.objects.filter(verse_id=self.verse_id).order_by("word_id")
+
     def to_dict(self):
         return {
             "@id": reverse("verse", args=[self.verse_id]),
             "@type": "verse",
             "book": reverse("book", args=[self.book_osis_id]),
-            "words": [w.to_dict() for w in Word.objects.filter(verse_id=self.verse_id).order_by("word_id")],
+            "prev": reverse("verse", args=[self.prev_verse]) if self.prev_verse else None,
+            "next": reverse("verse", args=[self.next_verse]) if self.next_verse else None,
+            "words": [w.to_dict() for w in self.words()],
         }
 
 
