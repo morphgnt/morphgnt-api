@@ -1,0 +1,13 @@
+key: 19864YBNYPK
+vcs: git
+runtime: python-2.7.3
+requirements_file: requirements.txt
+on_deploy:
+    - manage.py migrate --noinput
+wsgi:
+    entry_point: morphgnt_api.wsgi:application
+    gunicorn:
+        worker_class: sync
+    use_environment_cache: true
+env:
+    DJANGO_SETTINGS_MODULE: morphgnt_api.settings_gondor
