@@ -7,7 +7,9 @@ from morphgnt_api.models import Word, Book, Verse, Paragraph, Sentence
 
 def resource_view(model):
     def _(request, **kwargs):
-        return JsonResponse(get_object_or_404(model, **kwargs).to_dict())
+        response = JsonResponse(get_object_or_404(model, **kwargs).to_dict())
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
     return _
 
 
@@ -19,7 +21,7 @@ book = resource_view(Book)
 
 
 def root(request):
-    return JsonResponse({
+    response = JsonResponse({
         "books": [
             {
                 "@id": reverse("book", args=[book.book_osis_id]),
@@ -28,6 +30,8 @@ def root(request):
             for book in Book.objects.order_by("sblgnt_id")
         ]
     })
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
 
 
 def home(request):
