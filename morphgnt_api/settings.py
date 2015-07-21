@@ -1,10 +1,12 @@
-# Quick-start development settings - unsuitable for production
+import os
+
+import dj_database_url
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'g7j+tn)pjz_sw7j3$z_c*^6gwv43b7!%1&#!nt2)q2u&6i#@qx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -23,8 +25,5 @@ WSGI_APPLICATION = "morphgnt_api.wsgi.application"
 # Database
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "morphgnt_api",
-    }
+    "default": dj_database_url.config(default="postgres://localhost/morphgnt_api")
 }
