@@ -11,5 +11,7 @@ urlpatterns = [
 
     url(r"^v0/root.json$", "morphgnt_api.views.root", name="root"),
 
+    url(r"^loaderio-97c892ba1d7ce63eb626ca62a7a0a961/$", "morphgnt_api.views.loader_verification"),
+
     url(r"^$", "morphgnt_api.views.home", name="home"),
 ]

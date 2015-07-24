@@ -36,3 +36,7 @@ def root(request):
 
 def home(request):
     return HttpResponse("Go to <a href='{link}'>{link}</a> for API. See <a href='https://github.com/morphgnt/morphgnt-api'>https://github.com/morphgnt/morphgnt-api</a> for documentation.".format(link=reverse("root")), content_type="text/html")
+
+
+def loader_verification(request):
+    return HttpResponse("loaderio-97c892ba1d7ce63eb626ca62a7a0a961")
