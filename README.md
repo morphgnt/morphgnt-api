@@ -48,7 +48,7 @@ A verse (currently) looks something like this:
 {
     "@id": "/v0/verse/640101.json",
     "@type": "verse",
-    "prev": null,,
+    "prev": null,
     "next": "/v0/verse/640102.json",
     "book": "/v0/book/John.json",
     "words": [...]
