@@ -15,6 +15,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "morphgnt_api",
+    "letsencrypt",
 ]
 MIDDLEWARE_CLASSES = []
 
