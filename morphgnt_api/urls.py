@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import include, url
 
 urlpatterns = [
     url(r"^v0/word/(?P<word_id>\d{11}).json$", "morphgnt_api.views.word", name="word"),
@@ -12,6 +12,8 @@ urlpatterns = [
     url(r"^v0/root.json$", "morphgnt_api.views.root", name="root"),
 
     url(r"^loaderio-97c892ba1d7ce63eb626ca62a7a0a961/$", "morphgnt_api.views.loader_verification"),
+
+    url(r"^\.well-known/", include("letsencrypt.urls")),
 
     url(r"^$", "morphgnt_api.views.home", name="home"),
 ]
