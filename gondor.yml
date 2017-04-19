@@ -1,3 +1,6 @@
-key: 0FECZI2BTMB
-exec:
-  web: gunicorn --bind=0.0.0.0 --log-file - morphgnt_api.wsgi
+site: jtauber/morphgnt_api
+branches:
+  master: primary
+deploy:
+  services:
+    - web-eij8d
