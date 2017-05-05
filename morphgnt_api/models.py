@@ -1,6 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
+from .ref import verse_from_bcv, verse_range_title
+
 
 def parse_as_dict(parse):
     return {
@@ -77,13 +79,17 @@ class Paragraph(models.Model):
         return Word.objects.filter(paragraph_id=self.paragraph_id)
 
     def to_dict(self):
+        words = list(self.words())
+        first_verse_id = words[0].verse_id
+        last_verse_id = words[-1].verse_id
         return {
             "@id": Paragraph.get_full_id(self.paragraph_id),
+            "title": verse_range_title(first_verse_id, last_verse_id),
             "@type": "paragraph",
             "prev": Paragraph.get_full_id(self.prev_paragraph),
             "next": Paragraph.get_full_id(self.next_paragraph),
             "book": Book.get_full_id(self.book_osis_id),
-            "words": [w.to_dict() for w in self.words()],
+            "words": [w.to_dict() for w in words],
         }
 
 
@@ -106,13 +112,17 @@ class Sentence(models.Model):
         return Word.objects.filter(sentence_id=self.sentence_id)
 
     def to_dict(self):
+        words = list(self.words())
+        first_verse_id = words[0].verse_id
+        last_verse_id = words[-1].verse_id
         return {
             "@id": Sentence.get_full_id(self.sentence_id),
+            "title": verse_range_title(first_verse_id, last_verse_id),
             "@type": "sentence",
             "prev": Sentence.get_full_id(self.prev_sentence),
             "next": Sentence.get_full_id(self.next_sentence),
             "book": Book.get_full_id(self.book_osis_id),
-            "words": [w.to_dict() for w in self.words()],
+            "words": [w.to_dict() for w in words],
         }
 
 
@@ -137,6 +147,7 @@ class Verse(models.Model):
     def to_dict(self):
         return {
             "@id": reverse("verse", args=[self.verse_id]),
+            "title": verse_from_bcv(self.verse_id).title,
             "@type": "verse",
             "book": reverse("book", args=[self.book_osis_id]),
             "prev": Verse.get_full_id(self.prev_verse),
