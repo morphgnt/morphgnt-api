@@ -1,4 +1,5 @@
 site: jtauber/morphgnt_api
+buildpack: https://github.com/heroku/heroku-buildpack-python.git
 branches:
   master: primary
 deploy:
