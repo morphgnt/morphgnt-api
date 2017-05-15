@@ -1,4 +1,7 @@
+import json
+
 from django.core.urlresolvers import reverse
+from django.db import connection
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 
@@ -10,7 +13,6 @@ from . import ref
 def resource_view(model):
     def _(request, **kwargs):
         response = JsonResponse(get_object_or_404(model, **kwargs).to_dict())
-        response["Access-Control-Allow-Origin"] = "*"
         return response
     return _
 
@@ -32,7 +34,6 @@ def root(request):
             for book in Book.objects.order_by("sblgnt_id")
         ]
     })
-    response["Access-Control-Allow-Origin"] = "*"
     return response
 
 
@@ -46,8 +47,26 @@ def verse_lookup(request):
         response = JsonResponse({
             "verse_id": reverse("verse", args=[verse_id]),
         })
-    response["Access-Control-Allow-Origin"] = "*"
     return response
+
+
+def frequency(request):
+
+    payload = json.loads(request.body)
+    output = []
+
+    lemmas = [item["lemma"] for item in payload["input"]]
+
+    cursor = connection.cursor()
+    cursor.execute("select lemma, count(*) from morphgnt_api_word where lemma IN %s group by lemma", (tuple(lemmas),))
+    counts = dict(cursor.fetchall())
+
+    for item in payload["input"]:
+        id_, lemma = item["id"], item["lemma"]
+        lemma_count = counts[lemma]
+        output.append({"id": id_, "count": lemma_count})
+
+    return JsonResponse({"output": output})
 
 
 def home(request):

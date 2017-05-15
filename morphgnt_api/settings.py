@@ -19,8 +19,11 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     "morphgnt_api",
     "letsencrypt",
+    "corsheaders",
 ]
-MIDDLEWARE_CLASSES = []
+MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+]
 
 ROOT_URLCONF = "morphgnt_api.urls"
 WSGI_APPLICATION = "morphgnt_api.wsgi.application"
@@ -31,3 +34,5 @@ WSGI_APPLICATION = "morphgnt_api.wsgi.application"
 DATABASES = {
     "default": dj_database_url.config(default="postgres://localhost/morphgnt_api")
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
