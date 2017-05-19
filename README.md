@@ -16,8 +16,8 @@ The URI patterns are:
 /v0/sentence/{sentence_id}.json
 /v0/verse/{verse_id}.json
 /v0/word/{word_id}.json
-/v0/verse-lookup/
-/v0/frequency
+/v0/verse-lookup/?{verse-reference}
+/v0/frequency/
 ```
 
 A word (currently) looks something like this:
