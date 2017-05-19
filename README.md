@@ -78,7 +78,7 @@ A book (currently) looks something like this:
 ```
 
 `/v0/verse-lookup/?{verse-reference}` parses the verse reference and returns
-a JSON object indicates the URL of the verse resource.
+a JSON object indicating the URL of the verse resource.
 
 e.g. `/v0/verse-lookup/?Jn+3.16` will return `{"verse_id": "/v0/verse/640316.json"}`
 
