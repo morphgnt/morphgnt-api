@@ -16,6 +16,8 @@ The URI patterns are:
 /v0/sentence/{sentence_id}.json
 /v0/verse/{verse_id}.json
 /v0/word/{word_id}.json
+/v0/verse-lookup/
+/v0/frequency
 ```
 
 A word (currently) looks something like this:
@@ -48,6 +50,7 @@ A verse (currently) looks something like this:
 {
     "@id": "/v0/verse/640101.json",
     "@type": "verse",
+    "title": "John 1.1",
     "prev": null,
     "next": "/v0/verse/640102.json",
     "book": "/v0/book/John.json",
@@ -74,4 +77,18 @@ A book (currently) looks something like this:
 }
 ```
 
-Feedback is greatly appreciated to make this more useful.
+`/v0/verse-lookup/?{verse-reference}` parses the verse reference and returns
+a JSON object indicates the URL of the verse resource.
+
+e.g. `/v0/verse-lookup/?Jn+3.16` will return `{"verse_id": "/v0/verse/640316.json"}`
+
+A variety of book name abbreviations are supported.
+
+`/v0/frequency/` takes a body of a JSON object containing an `input` property
+whose value consists of a list of JSON objects each with an `id` and `lemma`
+property. The response is a JSON object with an `output` property whose value
+consists of a list of JSON objects each with an `id` and `count` property. The
+`count` property gives the lemma count of the input `lemma`. The output counts
+are correlated to the input lemmas via matching `id` values.
+
+Feedback is greatly appreciated to make this whole API more useful.
