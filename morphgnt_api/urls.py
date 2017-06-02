@@ -14,6 +14,8 @@ urlpatterns = [
 
     url(r"^v0/verse-lookup/$", views.verse_lookup, name="verse_lookup"),
     url(r"^v0/frequency/$", views.frequency, name="frequency"),
+    url(r"^v0/kwic/$", views.kwic, name="kwic"),
+
     url(r"^v0/root.json$", views.root, name="root"),
 
     url(r"^loaderio-97c892ba1d7ce63eb626ca62a7a0a961/$", views.loader_verification),
