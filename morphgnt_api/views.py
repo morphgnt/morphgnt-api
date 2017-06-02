@@ -69,6 +69,44 @@ def frequency(request):
     return JsonResponse({"output": output})
 
 
+def kwic(request):
+    try:
+        word = list(request.GET.keys())[0]
+    except ValueError as e:
+        response = JsonResponse({"message": str(e)}, status=400)
+    else:
+        words = list(Word.objects.filter(
+            verse_id__in=Word.objects.filter(word=word).values("verse_id")
+        ).values_list("text", "word", "verse_id"))
+
+        results = []
+
+        for index, item in enumerate(words):
+            if item[1] == word:
+                pre = []
+                post = []
+                for i in range(max(0, index - 5), index):
+                    if words[i][2] == item[2]:
+                        pre.append(words[i][0])
+                for i in range(index + 1, min(len(words), index + 6)):
+                    if words[i][2] == item[2]:
+                        post.append(words[i][0])
+
+                results.append({
+                    "verse_id": reverse("verse", args=[item[2]]),
+                    "title": ref.verse_from_bcv(item[2]).title,
+                    "pre": " ".join(pre),
+                    "keyword": item[0],
+                    "post": " ".join(post),
+                })
+
+        response = JsonResponse({
+            "word": word,
+            "results": results,
+        })
+    return response
+
+
 def home(request):
     return HttpResponse("Go to <a href='{link}'>{link}</a> for API. See <a href='https://github.com/morphgnt/morphgnt-api'>https://github.com/morphgnt/morphgnt-api</a> for documentation.".format(link=reverse("root")), content_type="text/html")
 
