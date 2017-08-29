@@ -29,6 +29,7 @@ def root(request):
         "books": [
             {
                 "@id": reverse("book", args=[book.book_osis_id]),
+                "osis": book.book_osis_id,
                 "name": book.name,
             }
             for book in Book.objects.order_by("sblgnt_id")
