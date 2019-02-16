@@ -1,1 +1,1 @@
-web: gunicorn --bind=0.0.0.0 --log-file - morphgnt_api.wsgi
+web: gunicorn --log-file - morphgnt_api.wsgi

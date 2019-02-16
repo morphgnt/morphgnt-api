@@ -10,7 +10,8 @@ DEBUG = bool(int(os.environ.get("DEBUG", "1")))
 
 ALLOWED_HOSTS = [
     "localhost",
-    "api.morphgnt.org"
+    "api.morphgnt.org",
+    "*.herokuapp.com"
 ]
 
 
