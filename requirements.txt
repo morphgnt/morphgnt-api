@@ -5,5 +5,4 @@ gunicorn==19.7.1
 
 dj-database-url==0.4.2
 
-django-letsencrypt==2.0.0
 django-cors-headers==2.0.2
