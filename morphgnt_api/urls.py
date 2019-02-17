@@ -20,7 +20,5 @@ urlpatterns = [
 
     url(r"^loaderio-97c892ba1d7ce63eb626ca62a7a0a961/$", views.loader_verification),
 
-    url(r"^\.well-known/", include("letsencrypt.urls")),
-
     url(r"^$", views.home, name="home"),
 ]
